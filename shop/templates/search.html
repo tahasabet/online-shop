@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <!-- Header Section -->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder" style="font-family: 'Poppins', sans-serif;">Search Product</h1>
+                <p class="lead fw-normal text-white-50 mb-0" style="font-family: 'Roboto', sans-serif;">Search for your desired product below</p>
+            </div>
+        </div>
+    </header>
+    <br><br>
+
+    <!-- About Us Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Form Section -->
+                    <div class="card">
+                        <div class="card-header">
+                            Search
+                        </div>
+                        <div class="card-body">
+                            <form action="{% url 'search' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="text" class="form-control" placeholder="Enter the product name" name="searched">
+                                <br>
+                                <button type="submit" class="btn btn-outline-dark">Search</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                        {% if 'searched' %}
+                            {% for item in searched %}
+                                {% if item.is_sale %}
+                                    <div class="col mb-5 animate__animated animate__fadeIn">
+                                        <div class="card h-100 shadow-lg">
+                                            <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                                            <!-- Product image-->
+                                            <img class="card-img-top hover-zoom" src="{{ item.picture.url }}" alt="..." />
+                                            <!-- Product details-->
+                                            <div class="card-body p-4">
+                                                <div class="text-center">
+                                                    <!-- Product name-->
+                                                    <h5 class="fw-bolder text-white">{{ item.name }}</h5>
+                                                    <!-- Product price-->
+                                                    <p class="text-white-50">in {{ item.category }}</p>
+                                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                                        {% with ''|center:item.star as range %}
+                                                            {% for _ in range %}
+                                                                <div class="bi-star-fill"></div>
+                                                            {% endfor %}
+                                                        {% endwith %}
+                                                    </div>
+                                                    <strike class="text-white-50"> {{ item.price | intcomma}} toman</strike> <br>
+                                                    <span class="text-light">{{ item.sale_price | intcomma}} toman</span>
+                                                </div>
+                                            </div>
+                                            <!-- Product actions-->
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                <div class="text-center"><a class="btn btn-outline-light mt-auto" href="{% url 'product' item.id %}">View options</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="col mb-5 animate__animated animate__fadeIn">
+                                        <div class="card h-100 shadow-lg">
+                                            <!-- Product image-->
+                                            <img class="card-img-top hover-zoom" src="{{ item.picture.url }}" alt="..." />
+                                            <!-- Product details-->
+                                            <div class="card-body p-4">
+                                                <div class="text-center">
+                                                    <!-- Product name-->
+                                                    <h5 class="fw-bolder text-white">{{ item.name }}</h5>
+                                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                                        {% with ''|center:item.star as range %}
+                                                            {% for _ in range %}
+                                                                <div class="bi-star-fill"></div>
+                                                            {% endfor %}
+                                                        {% endwith %}
+                                                    </div>
+                                                    <p class="text-white-50">in {{ item.category }}</p>
+                                                    <span class="text-light">{{ item.price | intcomma}} toman</span>
+                                                </div>
+                                            </div>
+                                            <!-- Product actions-->
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                <div class="text-center"><a class="btn btn-outline-light mt-auto" href="{% url 'product' item.id %}">View options</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br><br>
+
+    <!-- CSS in-line -->
+    <style>
+        /* استایل عمومی */
+        body {
+            background-color: #121212; /* پس‌زمینه تیره */
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h1, h5 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* استایل برای کارت‌های محصولات */
+        .card {
+            background-color: #1e1e1e; /* رنگ پس‌زمینه کارت */
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05); /* بزرگ کردن کارت هنگام هاور */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* سایه بیشتر */
+        }
+
+        .card-body {
+            background-color: #2c2c2c; /* پس‌زمینه تیره‌تر در بدنه کارت */
+            padding: 20px;
+        }
+
+        /* استایل دکمه‌ها */
+        .btn-outline-light {
+            border-color: #ff5733; /* رنگ دکمه */
+            color: #ff5733;
+        }
+
+        .btn-outline-light:hover {
+            background-color: #ff5733;
+            color: #fff;
+        }
+
+        /* استایل تصویر محصول */
+        .card-img-top {
+            transition: transform 0.3s ease;
+        }
+
+        .card-img-top:hover {
+            transform: scale(1.1); /* بزرگ کردن تصویر هنگام هاور */
+        }
+
+        /* استایل برای نوار جستجو */
+        .form-control {
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+            color: white;
+            padding: 10px;
+        }
+
+        .form-control:focus {
+            border-color: #ff5733;
+            box-shadow: 0 0 0 0.25rem rgba(255, 87, 51, 0.5);
+        }
+
+        /* استایل ویژه برای نمایش ستاره‌ها */
+        .bi-star-fill {
+            color: #ffcc00; /* رنگ طلایی برای ستاره‌ها */
+        }
+
+        /* انیمیشن برای ظاهر شدن کارت‌ها */
+        .animate__fadeIn {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* استایل برای دکمه جستجو */
+        .btn-outline-dark {
+            background-color: #444;
+            border-color: #444;
+            color: white;
+        }
+
+        .btn-outline-dark:hover {
+            background-color: #ff5733;
+            border-color: #ff5733;
+        }
+    </style>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+/* تم کلی */
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* هدر */
+header.bg-dark {
+    background: linear-gradient(135deg, #333333, #1e1e1e);
+    text-align: center;
+    padding: 80px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.8);
+    animation: fadeIn 1.2s ease-in-out;
+}
+
+header h1 {
+    font-size: 3rem;
+    color: #ffffff;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+header p {
+    color: #b3b3b3;
+    font-size: 1.2rem;
+}
+
+/* فرم */
+form {
+    background: #1e1e1e;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.9);
+}
+
+/* دکمه‌ها */
+button.btn-outline-dark, a.btn-outline-dark {
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    background-color: transparent;
+    padding: 10px 25px;
+    font-size: 1rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+button.btn-outline-dark:hover, a.btn-outline-dark:hover {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    color: #121212;
+    transform: scale(1.1);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.8);
+}
+
+/* کانتینر */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* انیمیشن */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">Edit profile</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Update your personal details</p>
+        </div>
+    </div>
+</header>
+<br><br>
+<div class="container">
+    <div class="row">
+        <center>
+            <div class="col-10">
+                <form method="POST" action="{% url 'update_user' %}">
+                    {% csrf_token %}
+                    {{ user_form.as_p }}
+                    <br><br>
+                    <button type="submit" class="btn btn-outline-dark">Edit</button>
+                </form>
+                <br>
+                <a href="{% url 'update_password' %}" class="btn btn-outline-dark">Edit password</a>
+            </div>
+        </center>
+    </div>
+</div>
+<br><br>
+{% endblock %}

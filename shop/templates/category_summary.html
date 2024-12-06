@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder anime-title">LIYA SHOP</h1>
+                    <p class="lead fw-normal text-white-50 mb-0">MODERN SHOP</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Section-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                   {% for item in products %}
+                       {% if item.is_sale %}
+                    <div class="col mb-5 animate__animated animate__fadeIn animate__delay-1s">
+                        <div class="card h-100 shadow-lg card-hover">
+                             <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                            <!-- Product image-->
+                            <img class="card-img-top hover-zoom" src="{{ item.picture.url }}" alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder text-white">{{ item.name }}</h5>
+                                    <!-- Product price-->
+                                    <p class="text-white-50">in {{ item.category }}</p>
+                                 <div class="d-flex justify-content-center small text-warning mb-2">
+                                 {% with ''|center:item.star as range %}
+                                    {% for _ in range %}
+                                        <div class="bi-star-fill"></div>
+                                    {% endfor %}
+                                 {% endwith %}
+                                 </div>
+                                   <strike class="text-white-50"> {{ item.price | intcomma}} toman</strike> <br>
+                                    <span class="text-light">{{ item.sale_price | intcomma}} toman</span>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-light mt-auto btn-zoom" href="{% url 'product' item.id %}">View options</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                           <div class="col mb-5 animate__animated animate__fadeIn animate__delay-1s">
+                        <div class="card h-100 shadow-lg card-hover">
+                            <!-- Product image-->
+                            <img class="card-img-top hover-zoom" src="{{ item.picture.url }}" alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder text-white">{{ item.name }}</h5>
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                 {% with ''|center:item.star as range %}
+                                    {% for _ in range %}
+                                        <div class="bi-star-fill"></div>
+                                    {% endfor %}
+                                 {% endwith %}
+                                 </div>
+
+                                    <p class="text-white-50">in {{ item.category }}</p>
+                                    <span class="text-light">{{ item.price | intcomma}} toman</span>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center"><a class="btn btn-outline-light mt-auto btn-zoom" href="{% url 'product' item.id %}">View options</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- استایل‌ها و انیمیشن‌ها -->
+        <style>
+            /* تم مشکی با رنگ‌های سفید و روشن */
+            body {
+                background-color: #121212;
+                color: white;
+                font-family: 'Roboto', sans-serif;
+            }
+
+            /* هدر */
+            .bg-dark {
+                background-color: #121212 !important;
+            }
+
+            /* استایل عنوان انیمه */
+            .anime-title {
+                font-family: 'Russo One', sans-serif;
+                color: #ff5722;
+                font-size: 4rem;
+                text-transform: uppercase;
+                text-shadow: 3px 3px 5px rgba(255, 87, 34, 0.7), 0 0 25px rgba(255, 87, 34, 0.5);
+                animation: pulse 2s infinite, color-change 3s infinite alternate;
+            }
+
+            /* انیمیشن پالس برای عنوان */
+            @keyframes pulse {
+                0% {
+                    text-shadow: 3px 3px 5px rgba(255, 87, 34, 0.7), 0 0 25px rgba(255, 87, 34, 0.5);
+                }
+                50% {
+                    text-shadow: 5px 5px 15px rgba(255, 87, 34, 1), 0 0 30px rgba(255, 87, 34, 1);
+                }
+                100% {
+                    text-shadow: 3px 3px 5px rgba(255, 87, 34, 0.7), 0 0 25px rgba(255, 87, 34, 0.5);
+                }
+            }
+
+            @keyframes color-change {
+                0% {
+                    color: #ff5722;
+                }
+                100% {
+                    color: #ff9800;
+                }
+            }
+
+            /* استایل کارت‌ها */
+            .card {
+                background-color: #1e1e1e;
+                border-radius: 15px;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+            }
+
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+                animation: card-zoom 0.3s ease-in-out;
+            }
+
+            @keyframes card-zoom {
+                0% {
+                    transform: scale(1);
+                }
+                100% {
+                    transform: scale(1.05);
+                }
+            }
+
+            /* انیمیشن تصویر */
+            .card-img-top {
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .hover-zoom:hover {
+                transform: scale(1.1);
+                transition: transform 0.3s ease-in-out;
+            }
+
+            /* Badge Sale */
+            .badge {
+                background-color: #ff5722;
+                color: #fff;
+                font-size: 1rem;
+                border-radius: 5px;
+            }
+
+            /* دکمه‌ها */
+            .btn-outline-light {
+                border-color: #ff5722;
+                color: #ff5722;
+                transition: all 0.3s ease;
+            }
+
+            .btn-outline-light:hover {
+                background-color: #ff5722;
+                color: #fff;
+            }
+
+            /* انیمیشن دکمه */
+            .btn {
+                transition: background-color 0.3s ease, transform 0.3s ease;
+            }
+
+            .btn:hover {
+                background-color: #ff5722;
+                color: white;
+                transform: scale(1.1);
+            }
+
+            /* ستاره‌ها */
+            .bi-star-fill {
+                color: #ffeb3b;
+                margin-right: 3px;
+            }
+
+            /* تغییرات رنگ‌ها برای روشن‌تر شدن */
+            .text-white {
+                color: #fff !important;
+            }
+
+            .text-light {
+                color: #f0f0f0;
+            }
+
+            .text-white-50 {
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+            /* کارت افکت‌ها */
+            .card-hover:hover {
+                transform: translateY(-5px);
+                transition: transform 0.3s ease-in-out;
+            }
+        </style>
+{% endblock %}

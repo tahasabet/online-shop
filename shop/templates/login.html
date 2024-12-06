@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Header Section -->
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder animate__animated animate__fadeIn">Login</h1>
+            <p class="lead fw-normal text-white-50 mb-0 animate__animated animate__fadeIn animate__delay-1s">Start your journey</p>
+        </div>
+    </div>
+</header>
+<br><br>
+
+<!-- Login Form Section -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-10 col-md-6 col-lg-4">
+            <form method="POST" action="{% url 'login' %}" class="animate__animated animate__fadeIn animate__delay-2s shadow-lg p-4 rounded">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" class="form-control shadow-sm border-light" name="username" placeholder="Your Name" required style="font-family: 'Poppins', sans-serif;">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control shadow-sm border-light" name="password" placeholder="Your Password" required style="font-family: 'Poppins', sans-serif;">
+                </div>
+                <button type="submit" class="btn btn-dark w-100 rounded-pill mt-3" style="font-family: 'Roboto', sans-serif;">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<br><br>
+
+<!-- Add Custom CSS for Animations and Styling -->
+<style>
+    /* Font imports */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:wght@400&display=swap');
+
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #ff9f00;
+        box-shadow: 0 0 5px rgba(255, 159, 0, 0.7);
+    }
+
+    .btn-dark {
+        background-color: #333;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-dark:hover {
+        background-color: #ff9f00;
+        color: #333;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .animate__animated {
+        animation-duration: 1s;
+        animation-fill-mode: both;
+    }
+
+    .animate__fadeIn {
+        animation-name: fadeIn;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+</style>
+
+{% endblock %}

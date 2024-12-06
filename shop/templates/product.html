@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block content %}
+
+<br><br><br><br>
+<div class="card mb-3 animate__animated animate__fadeIn">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ product.picture.url }}" class="img-fluid rounded-start image-hover" alt="..." style="border-radius: 10px;">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title text-white">{{ product.name }}</h5>
+        <p class="card-text text-muted">{{ product.description }}</p>
+
+        {% if product.is_sale %}
+          <p class="card-text text-danger">Price: <strike>{{ product.price|intcomma }}</strike> - {{ product.sale_price|intcomma }}</p>
+        {% else %}
+          <p class="card-text text-white">Price: {{ product.price|intcomma }}</p>
+        {% endif %}
+
+        <label for="cart-qty" class="form-label text-white">Quantity:</label>
+        <select class="form-select" id="cart-qty" style="border-radius: 10px; background-color: #333; color: white; border: 1px solid #444;">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+        </select>
+
+        <br><br>
+
+        <button class="btn btn-outline-light btn-lg button-hover" type="button" id="add-cart" data-product-id="{{ product.id }}">
+          <i class="bi bi-cart-plus"></i> Add to Cart
+        </button>
+        <a href="{% url 'home' %}" class="btn btn-outline-light btn-lg button-hover">
+          <i class="bi bi-house-door"></i> Back to Home
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br><br><br><br><br><br><br><br><br><br>
+
+<script>
+$(document).on('click', '#add-cart', function (e) {
+  e.preventDefault();
+
+  // گرفتن product_id از data-attribute
+  var productId = $(this).data('product-id');
+
+  $.ajax({
+    type: 'POST',
+    url: "{% url 'cart_add' %}",
+    data: {
+      product_id: productId,  // استفاده از product_id درست
+      product_qty: $('#cart-qty option:selected').val(),
+      csrfmiddlewaretoken: '{{ csrf_token }}',
+      action: 'post',
+    },
+    success: function(json) {
+      document.getElementById("cart_quantity").textContent = json.qty;
+      location.reload();
+    },
+    error: function(xhr, errmsg, err) {
+      console.error("Error:", errmsg);
+    }
+  });
+})
+</script>
+
+<style>
+/* افکت‌ها */
+.image-hover {
+  transition: transform 0.3s ease-in-out;
+}
+
+.image-hover:hover {
+  transform: scale(1.1);
+}
+
+/* انیمیشن دکمه‌ها */
+.button-hover {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.button-hover:hover {
+  background-color: #f1f1f1;
+  color: #212121;
+  transform: scale(1.1);
+}
+
+/* پس‌زمینه تیره‌تر */
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.card {
+  background-color: #1d1d1d;
+  border: none;
+}
+
+.card-title, .card-text, .form-select, .btn {
+  color: #e0e0e0;
+}
+
+.card-title:hover {
+  color: #f1f1f1;
+}
+
+</style>
+
+{% endblock %}

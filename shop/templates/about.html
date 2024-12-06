@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- Header Section -->
+    <header class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder" style="font-family: 'Poppins', sans-serif;">ABOUT LIYA</h1>
+                <p class="lead fw-normal text-white-50 mb-0" style="font-family: 'Roboto', sans-serif;">OUR STORY</p>
+            </div>
+        </div>
+    </header>
+    <br><br>
+
+    <!-- About Us Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p align="justify" style="font-family: 'Lora', serif; font-size: 1.2rem; line-height: 1.6;">
+                        At <strong>LIYA</strong>, our goal is to provide you with a unique and unparalleled online shopping experience.
+                        From the beginning of our journey, we have been focused on delivering the best products with the highest quality at affordable prices.
+                        At <strong>LIYA</strong>, we care deeply about our customers and always strive to meet their needs in the best possible way.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br><br>
+
+    <!-- Contact Us Section -->
+    <section class="contact-section text-center bg-dark text-white py-5">
+        <div class="container">
+            <h2 class="mb-4" style="font-family: 'Poppins', sans-serif;">CONTACT US</h2>
+            <p class="lead" style="font-family: 'Roboto', sans-serif;">Have a question? Feel free to get in touch with us anytime!</p>
+            <div class="row">
+                <div class="col-md-4">
+                    <i class="bi bi-telephone-forward-fill mb-3" style="font-size: 3rem;"></i>
+                    <h4 style="font-family: 'Lora', serif;">Call Us</h4>
+                    <p>+1 234 567 890</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="bi bi-envelope-fill mb-3" style="font-size: 3rem;"></i>
+                    <h4 style="font-family: 'Lora', serif;">Email Us</h4>
+                    <p>support@liya.com</p>
+                </div>
+                <div class="col-md-4">
+                    <i class="bi bi-geo-alt-fill mb-3" style="font-size: 3rem;"></i>
+                    <h4 style="font-family: 'Lora', serif;">Our Address</h4>
+                    <p>1234 Main Street, City, Country</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <br><br>
+{% endblock %}
+
+<!-- Adding Fonts -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:wght@400&family=Lora:wght@400&display=swap');
+
+    body {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .about-section {
+        background-color: #1a1a1a;
+        padding: 60px 0;
+    }
+
+    .about-content h3 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        color: #ff9f00; /* Accent color */
+        font-family: 'Lora', serif;
+    }
+
+    .about-content p {
+        font-size: 1.1rem;
+        color: #bbb;
+    }
+
+    .contact-section i {
+        color: #ff9f00;
+    }
+
+    .contact-section h4 {
+        font-size: 1.5rem;
+        margin-top: 10px;
+        font-family: 'Lora', serif;
+    }
+
+    .contact-section p {
+        font-size: 1.1rem;
+    }
+</style>
